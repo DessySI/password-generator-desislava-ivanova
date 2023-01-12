@@ -88,53 +88,36 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-
+var passLength = 0;
+var passwordArr = [];
 
 
 // Function to prompt user for password options
 
-let passwordArr = [];
+function getPasswordOptions() {
+let includeSC = confirm("Would you like special characters to be included in your password?") ;
+let includeN = confirm("Would you like numbers to be included in your password?");
+let includeLCC = confirm("Would you like lower cased letters to be included in your password?");
+let includeUCC = confirm("Would you like upper cased letters to be included in your password?");
 
-function generatePassword() {
-var includeCharType = '';
-var includeSC = confirm("Would you like special characters to be included in your password?") ;
-var includeN = confirm("Would you like numbers to be included in your password?");
-var includeLCC = confirm("Would you like lower cased letters to be included in your password?");
-var includeUCC = confirm("Would you like upper cased letters to be included in your password?");
-
-if (includeSC) {
-  includeCharType += includeSC;
-  passwordArr.push(...specialCharacters);
-  console.log(passwordArr);
-};
- if (includeN) {
-  includeCharType += includeN;
-  passwordArr.push(...numericCharacters);
-  console.log(passwordArr);
-};
- if (includeLCC) {
-  includeCharType += includeLCC;
-  passwordArr.push(...lowerCasedCharacters);
-  console.log(passwordArr);
-};
- if (includeUCC) {
-  includeCharType += includeUCC;
-  passwordArr.push(...upperCasedCharacters);
-  console.log(passwordArr);
-};
- if (includeSC == false && includeN == false && includeLCC == false && includeUCC == false) {
-  alert("At least one type of characters should be included! \n\nIf you still want to generate random password, you can click Generate Password and choose at lease one character type.");
-  return "";
+  if (includeSC) {
+  passwordArr = passwordArr.concat(specialCharacters);
+} if (includeN) {
+  passwordArr = passwordArr.concat(numericCharacters);
+} if (includeLCC) {
+  passwordArr = passwordArr.concat(lowerCasedCharacters);
+} if (includeUCC) {
+  passwordArr = passwordArr.concat(upperCasedCharacters);
+} else if (includeSC == false && includeN == false &&  includeLCC == false && includeUCC == false) {
+return alert("At least one type of characters should be included! \n\nIf you still want to generate random password, you can click Generate Password and choose at lease one character type.");
 }
 }
-
-
-
 // Function for getting a random element from an array
-function getRandom(Characters, Length) {
+function getRandom() {
   var password = "";
     for (i = 0; i < Length; i++){
-     password += Characters[Math.random() * Characters.length]
+     var characters = Math.random() * passwordArr.length;
+     password += passwordArr[characters];
    }
    return password;
 }
@@ -142,16 +125,15 @@ function getRandom(Characters, Length) {
   
 // Function to generate password with user input
 function generatePassword() {
-  let passLength = prompt("Please insert a number between 10 and 64 for your password length.");
-  passLength = parseInt(passLength);
+  getPasswordOptions();
+  passLength = parseInt(prompt("Please insert a number between 10 and 64 for your password length."));
 
   if (passLength >= 10 && passLength <=64) {
     console.log (passLength);
   } else {
     alert ("Please pick a number between 10 and 64.");
-    console.log ("Try again!");
+    return false;
   };
-
   return getRandom(passwordArr, passLength);
 }
 
@@ -168,3 +150,6 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener('click', writePassword); 
+
+
+
