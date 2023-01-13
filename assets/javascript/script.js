@@ -124,7 +124,7 @@ function generatePassword() {
   if (confirm("Would you like special characters to be included in your password?")) {
     passwordArr = passwordArr.concat(specialCharacters);
   }
-  if (confirm("Would you like numbers to be included in your password?")) {
+  if (confirm("Would you like numbers to be included in your password")) {
     passwordArr = passwordArr.concat(numericCharacters);
   }
   if (confirm("Would you like lower cased letters to be included in your password?")) {
@@ -135,7 +135,6 @@ function generatePassword() {
   } 
   if (!confirm) {
     alert("At least one type of characters should be included! \n\nIf you still want to generate random password, you can click Generate Password and choose at lease one character type.");
-    return "";
   }
 }
 
@@ -145,12 +144,13 @@ function generatePassword() {
   function getRandom() {
     var password = "";
 
-    if (passLength >= 10 && passLength <=64) {
+    if(passLength >= 10 && passLength <=64) {
       for(var i = 0; i < passLength; i++) {
           var characters = Math.floor(Math.random() * passwordArr.length);
        password += passwordArr[characters];
-       return password; }
-    } else {
+     }
+     return password;
+    }else{
       return "";
     }
   }
