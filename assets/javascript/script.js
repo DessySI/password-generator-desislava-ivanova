@@ -88,44 +88,30 @@ var upperCasedCharacters = [
   'Z'
 ];
 
+// Get references to the #generate element
+var generateBtn = document.querySelector('#generate');
+// Add event listener to generate button
+generateBtn.addEventListener('click', writePassword); 
+
+// Write password to the #password input
+function writePassword() {
+  generatePassword();
+
+  if (generatePassword){
+  var pass = getRandom();
+  var passwordText = document.querySelector('#password');
+  passwordText.value = pass;
+} else {
+  passwordText.value = "";
+}
+}
+
 var passLength = 0;
 var passwordArr = [];
 
-
 // Function to prompt user for password options
-
-function getPasswordOptions() {
-let includeSC = confirm("Would you like special characters to be included in your password?") ;
-let includeN = confirm("Would you like numbers to be included in your password?");
-let includeLCC = confirm("Would you like lower cased letters to be included in your password?");
-let includeUCC = confirm("Would you like upper cased letters to be included in your password?");
-
-  if (includeSC) {
-  passwordArr = passwordArr.concat(specialCharacters);
-} if (includeN) {
-  passwordArr = passwordArr.concat(numericCharacters);
-} if (includeLCC) {
-  passwordArr = passwordArr.concat(lowerCasedCharacters);
-} if (includeUCC) {
-  passwordArr = passwordArr.concat(upperCasedCharacters);
-} else if (includeSC == false && includeN == false &&  includeLCC == false && includeUCC == false) {
-return alert("At least one type of characters should be included! \n\nIf you still want to generate random password, you can click Generate Password and choose at lease one character type.");
-}
-}
-// Function for getting a random element from an array
-function getRandom() {
-  var password = "";
-    for (i = 0; i < Length; i++){
-     var characters = Math.random() * passwordArr.length;
-     password += passwordArr[characters];
-   }
-   return password;
-}
-
-  
 // Function to generate password with user input
 function generatePassword() {
-  getPasswordOptions();
   passLength = parseInt(prompt("Please insert a number between 10 and 64 for your password length."));
 
   if (passLength >= 10 && passLength <=64) {
@@ -133,23 +119,46 @@ function generatePassword() {
   } else {
     alert ("Please pick a number between 10 and 64.");
     return false;
-  };
-  return getRandom(passwordArr, passLength);
+  }
+
+  if (confirm("Would you like special characters to be included in your password?")) {
+    passwordArr = passwordArr.concat(specialCharacters);
+  }
+  if (confirm("Would you like numbers to be included in your password?")) {
+    passwordArr = passwordArr.concat(numericCharacters);
+  }
+  if (confirm("Would you like lower cased letters to be included in your password?")) {
+    passwordArr = passwordArr.concat(lowerCasedCharacters);
+  }
+  if (confirm("Would you like upper cased letters to be included in your password?")) {
+    passwordArr = passwordArr.concat(upperCasedCharacters);
+  } 
+  if (!confirm) {
+    alert("At least one type of characters should be included! \n\nIf you still want to generate random password, you can click Generate Password and choose at lease one character type.");
+    return "";
+  }
 }
 
 
-// Get references to the #generate element
-var generateBtn = document.querySelector('#generate');
 
-// Write password to the #password input
-function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector('#password');
-  passwordText.value = password;
-}
+  // Function for getting a random element from an array
+  function getRandom() {
+    var password = "";
 
-// Add event listener to generate button
-generateBtn.addEventListener('click', writePassword); 
+    if (passLength >= 10 && passLength <=64) {
+      for(var i = 0; i < passLength; i++) {
+          var characters = Math.floor(Math.random() * passwordArr.length);
+       password += passwordArr[characters];
+       return password; }
+    } else {
+      return "";
+    }
+  }
+
+
+
+
+
 
 
 
