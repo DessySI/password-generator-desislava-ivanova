@@ -97,7 +97,7 @@ generateBtn.addEventListener('click', writePassword);
 function writePassword() {
   generatePassword();
 
-  if (generatePassword){
+  if (generatePassword) {
   var pass = getRandom();
   var passwordText = document.querySelector('#password');
   passwordText.value = pass;
@@ -114,13 +114,13 @@ var passwordArr = [];
 function generatePassword() {
   passLength = parseInt(prompt("Please insert a number between 10 and 64 for your password length."));
 
-  if (passLength >= 10 && passLength <=64) {
+  if (passLength >= 10 && passLength <= 64) {
     console.log (passLength);
   } else {
     alert ("Please pick a number between 10 and 64.");
     return false;
   }
-
+  
   if (confirm("Would you like special characters to be included in your password?")) {
     passwordArr = passwordArr.concat(specialCharacters);
   }
@@ -133,9 +133,11 @@ function generatePassword() {
   if (confirm("Would you like upper cased letters to be included in your password?")) {
     passwordArr = passwordArr.concat(upperCasedCharacters);
   } 
-  if (!confirm) {
-    alert("At least one type of characters should be included! \n\nIf you still want to generate random password, you can click Generate Password and choose at lease one character type.");
-  }
+  else if (passwordArr.length == 0) {
+     alert("At least one type of characters should be included! \n\nIf you still want to generate random password, you can click Generate Password and choose at lease one character type.");   
+     return "";
+    }
+  
 }
 
 
@@ -147,13 +149,18 @@ function generatePassword() {
     if(passLength >= 10 && passLength <=64) {
       for(var i = 0; i < passLength; i++) {
           var characters = Math.floor(Math.random() * passwordArr.length);
-       password += passwordArr[characters];
+       password += passwordArr[characters];     
      }
-     return password;
-    }else{
-      return "";
     }
+    if(passwordArr.length === 0){
+      password = "Try again";
+    }
+    return password;
   }
+  
+     
+    
+  
 
 
 
